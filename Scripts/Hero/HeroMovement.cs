@@ -12,7 +12,7 @@ public class HeroMovement : MonoBehaviour
     //  = new Hero("Chelik", 100, 10, 20, 10);
     private int _health = 100;
     private float _moveSpeed = 1f;
-    private int _level = 1;
+    // private int _level = 1;
     private int _experience = 0;
 
     // void Start()

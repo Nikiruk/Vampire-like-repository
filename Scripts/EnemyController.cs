@@ -20,29 +20,29 @@ public class FollowScript : MonoBehaviour
             agent.SetDestination(targetCharacter.position);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Проверить, столкнулся ли персонаж с целевым персонажем
-        if(collision.gameObject.transform == targetCharacter)
-        {
-            // Здесь можно добавить код для триггера столкновения
-            Debug.Log("Столкновение с целевым персонажем!");
-        }
-    }
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //     // Проверить, столкнулся ли персонаж с целевым персонажем
+    //     if(collision.gameObject.transform == targetCharacter)
+    //     {
+    //         // Здесь можно добавить код для триггера столкновения
+    //         Debug.Log("Столкновение с целевым персонажем!");
+    //     }
+    // }
 }
 
 
 
 
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class EnemyController : MonoBehaviour
-{
-    // [SerializeField] private GameObject _enemyPrefab;
+// [RequireComponent(typeof(Rigidbody2D))]
+// public class EnemyController : MonoBehaviour
+// {
+//     // [SerializeField] private GameObject _enemyPrefab;
 
-    private void FollowHero()
-    {
-        var target = GameObject.Find("MainCharacter");
+//     private void FollowHero()
+//     {
+//         var target = GameObject.Find("MainCharacter");
         
-    }
-}
+//     }
+// }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,41 +7,44 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     public Transform player; // Ссылка на объект игрока
-    private Rigidbody2D enemyRigidbody2D; // Ссылка на Rigidbody2D врага
+    // private Rigidbody2D enemyRigidbody2D; // Ссылка на Rigidbody2D врага
+    // private Transform enemyPosition;
+    // private Vector3 pos;
+    // private Vector2 newPosition;
     private float maxRaycastDistance = 10f; // Максимальная дальность raycast
-    private float attackRange = 0.1f; // Диапазон атаки
+    private float attackRange = 1f; // Диапазон атаки
 
     void Start()
     {
-        enemyRigidbody2D = GetComponent<Rigidbody2D>(); // Получение Rigidbody2D врага
+        // enemyPosition = GetComponent<Transform>(); // Получение Rigidbody2D врага
     }
 
     void Update()
     {
-        if (player != null) // Проверка, установлен ли объект игрока
+        
+        if (player != null)
         {
-            // Debug.Log("PlayerTRUE");
-            // Raycast в направлении игрока
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.position, maxRaycastDistance);
 
-            // Проверка, если raycast попал в игрока
-            if (hit.collider != null && hit.collider.gameObject == player)
+            Vector2 direction = (player.position - transform.position).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxRaycastDistance, 64);
+            if (hit.collider != null && hit.collider.gameObject == player.gameObject)
             {
-                Debug.Log("Raycast on player");
+                // Debug.Log(hit.collider.gameObject);
                 // Проверка, находится ли игрок в пределах диапазона атаки
                 if (Vector2.Distance(transform.position, player.position) <= attackRange)
                 {
-                    Debug.Log("ATTACK");
+                    // Debug.Log("ATTACK");
                     // Атака игрока
                     // ...
                 }
                 else
                 {
                     // Двигаться к игроку
-                    Vector2 direction = (player.position - transform.position).normalized;
-                    enemyRigidbody2D.AddForce(direction * enemyRigidbody2D.mass * 10f); // Приложить силу к врагу
+                    transform.position = Vector2.MoveTowards(transform.position, player.position, 1f * Time.deltaTime);
+                    // enemyRigidbody2D.MovePosition(new Vector2(0,0), new Vector2(1,1), 1f); // Приложить силу к врагу
                 }
             }
+                
         }
     }
 }

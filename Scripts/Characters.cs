@@ -24,3 +24,8 @@ public class Enemy
 {
     private Characters enemy = new Characters("vasa", 100, 5, 2);
 }
+
+interface IDamage
+{
+    void Vasa(int dmg);
+}

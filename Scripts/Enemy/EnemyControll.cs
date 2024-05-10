@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(EnemyAI))]
 public class EnemyControll : MonoBehaviour
 {
     private StatsManager Status = new StatsManager();
@@ -27,13 +27,13 @@ public class EnemyControll : MonoBehaviour
 
     void Update()
     {
-        
-        // if (Status.Health <= 0)
-        // {
-        //     EventManager.OnEnemyDied();
-        //     Destroy(gameObject);
-        // }
-        enemyAI.EnemyMovement(player, Status.Health, Status.MoveSpeed);
+        enemyAI.EnemyMovement(player, Status.MoveSpeed);
+
+        if (Status.Health <= 0)
+        {
+            EventManager.OnEnemy1Died();
+            Destroy(gameObject);
+        }
 
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(HeroMovement))]
@@ -12,19 +13,37 @@ public class HeroController : MonoBehaviour
     {
         heroMovement = GetComponent<HeroMovement>();
         EventManager.Enemy1Died += OnEnemyDied;
+        EventManager.Enemy1Attack += OnEnemy1Attack;
+        // EventManager.newEvent += OnEnemy1Attack;
         // Status.Health = 1000;
     }
 
     void FixedUpdate()
     {
         heroMovement.MoveSetup(Status.MoveSpeed);
+
+        if (Status.Health <= 0)
+        {
+            Debug.Log("You are dead");
+            Destroy(gameObject);
+            Time.timeScale = 0;
+        }
         // Status.TakeDamage(5);
         // Debug.Log(Status.Health);
     }
 
     void OnEnemyDied()
     {
-        lvl.Level++;
-        Debug.Log(lvl.Level);
+        lvl.Level += 1;
+        // Debug.Log(lvl.Level);
+    }
+
+    void OnEnemy1Attack(int dmg)
+    {
+        if(Status.Health > 0)
+        {
+        Status.Health -= dmg;
+        Debug.Log("U WAS HIT, now ur HP is: " + Status.Health);
+        }
     }
 }

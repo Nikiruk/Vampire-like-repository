@@ -20,13 +20,13 @@ public class StatsManager
 
     
 
-    public void TakeDamage(int damage)
-    {
-        if (Health > 0)
-            Health -= damage;            
-        else
-            Debug.Log("YOU ARE DEAD");
-    }
+    // public void TakeDamage(int damage)
+    // {
+    //     if (Health > 0)
+    //         Health -= damage;            
+    //     else
+    //         Debug.Log("YOU ARE DEAD");
+    // }
 
     
 

@@ -9,7 +9,7 @@ using UnityEngine.Animations;
 public class EnemyControll : MonoBehaviour, IDamageable
 {
     private StatsManager Status = new StatsManager();
-    public Transform player;
+    private Transform player;
     // private HeroController player;
     private EnemyAI enemyAI;
     private Animator animator;
@@ -24,6 +24,7 @@ public class EnemyControll : MonoBehaviour, IDamageable
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponentInChildren<Animator>();
         textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
@@ -57,29 +58,10 @@ public class EnemyControll : MonoBehaviour, IDamageable
 
 
         }
-        // Debug.Log(animator);
-
-
     }
 
-    // public void ChangeColor(Color clr)
+    // public void GiveDamage(int dmg)
     // {
-    //     SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
-    //     foreach (SpriteRenderer renderer in renderers)
-    //     {
-    //         renderer.material.color = clr;
-    //     }
-
-
-    // }
-
-    // private void OnDamaged()
-    // {
-
-    // }
-
-    // public void TextDmg(string value)
-    // {
-    //     // children
+    //     throw new NotImplementedException();
     // }
 }

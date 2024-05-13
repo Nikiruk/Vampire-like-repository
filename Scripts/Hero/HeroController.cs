@@ -6,27 +6,31 @@ using UnityEngine;
 // [RequireComponent(typeof(StatsManager))]
 public class HeroController : MonoBehaviour
 {
-    private HeroMovement heroMovement;
-    private StatsManager Status = new StatsManager();
+    // private HeroMovement heroMovement;
+    protected StatsManager Status = new StatsManager();
     private Leveling lvl = new Leveling();
     private int maxHealth;
-    // [SerializeField]private GameObject hitObject;
-    // Start is called before the first frame update
+
+    protected virtual void Move()
+    { 
+        //Вызывается переопределённый класс в потомке HeroMovement
+    }
+
     void Start()
     {
-        heroMovement = GetComponent<HeroMovement>();
+        // heroMovement = GetComponent<HeroMovement>();
         EventManager.Enemy1Died += OnEnemyDied;
         EventManager.Enemy1Attack += OnEnemy1Attack;
-        // StartCoroutine(Hit());
         maxHealth = Status.Health;
+        // StartCoroutine(Hit());
         // EventManager.newEvent += OnEnemy1Attack;
         // Status.Health = 1000;
     }
 
     void FixedUpdate()
     {
-        heroMovement.MoveSetup(Status.MoveSpeed);
-
+        // heroMovement.MoveSetup(Status.MoveSpeed);
+        Move();
         // if (Status.Health <= 0)
         // {
         //     Debug.Log("You are dead");

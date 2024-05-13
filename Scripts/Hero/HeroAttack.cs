@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class HeroAttack : MonoBehaviour
+public class HeroAttack : HeroController
 {
     [SerializeField]private GameObject hitObject;
     private RaycastHit2D[] hits;
-    private int heroAttack;
+    // private int heroAttack;
 
 
     void Start()
     {
         StartCoroutine(Hit());
+        // heroAttack = HeroController.AttackDamage;
     }
 
     IEnumerator Hit()
@@ -31,7 +34,7 @@ public class HeroAttack : MonoBehaviour
 
     void Attack()
     {
-        heroAttack = Random.Range(5, 25);
+        Status.AttackDamage += Random.Range(0, 5);
         hits = Physics2D.CircleCastAll(transform.position, 3f, transform.up, 0f, 128);
 
         for (int i = 0; i < hits.Length; i++)
@@ -40,7 +43,7 @@ public class HeroAttack : MonoBehaviour
 
             if(idamageable != null)
             {
-                idamageable.TakeDamage(heroAttack);
+                idamageable.TakeDamage(Status.AttackDamage);
                 // idamageable.ChangeColor(Color.black);
             }
         }

@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class HeroMovement : MonoBehaviour
+public class HeroMovement : HeroController
 {
-    public void MoveSetup(float MoveSpeed)
+
+    protected override void Move()
+    {
+        MoveSetup(Status.MoveSpeed);
+    }
+
+    private void MoveSetup(float MoveSpeed)
     {
         if(MoveSpeed > 0)
         {

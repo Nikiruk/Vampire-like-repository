@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridSetup : GameManager
 {
     [SerializeField] private GameObject[] tilePrefabs;
-    // [SerializeField] protected GameObject[] enemyPrefabs;
+    [SerializeField] private GameObject[] obstaclesPrefabs;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform parentTransform;
     [SerializeField] private float tileRange = 5f; // Установите диапазон, в котором тайлы будут генерироваться вокруг игрока
@@ -15,6 +15,7 @@ public class GridSetup : GameManager
     // protected int enemyCount = 0;
 
     private HashSet<Vector3> generatedTiles = new HashSet<Vector3>();
+    private HashSet<Vector2> generatedObstacles = new HashSet<Vector2>();
 
     protected override void MapGenerate()
     {
@@ -34,12 +35,20 @@ public class GridSetup : GameManager
                 for (float y = roundY - tileRange; y < roundY + tileRange; y++)
                 {
                     Vector3 tilePosition = new Vector3(x, y, 0);
+                    Vector2 obstaclePosition = new Vector2(x, y);
                     if (!generatedTiles.Contains(tilePosition))
                     {
                         GameObject newTile = Instantiate(tilePrefabs[Random.Range(0, tilePrefabs.Length)], tilePosition, Quaternion.identity);
                         newTile.transform.SetParent(parentTransform);
                         newTile.name = tilePosition.ToString(); // Устанавливаем имя тайла, чтобы легко найти его потом
                         generatedTiles.Add(tilePosition);
+                        if (generatedObstacles.Count < 10 && Random.Range(0, 100) < 10 && generatedTiles.Contains(tilePosition))
+                        {
+                            GameObject newObstacle = Instantiate(obstaclesPrefabs[Random.Range(0, obstaclesPrefabs.Length)], obstaclePosition, Quaternion.identity);
+                            newObstacle.transform.SetParent(parentTransform);
+                            newObstacle.name = obstaclePosition.ToString();
+                            generatedObstacles.Add(obstaclePosition);
+                        }
                     }
                 }
             }
@@ -60,6 +69,20 @@ public class GridSetup : GameManager
                         Destroy(tileToDestroy);
                         generatedTiles.Remove(tilePosition);
                     }
+                }
+            }
+
+            foreach (Vector2 obstaclePosition in new List<Vector2>(generatedObstacles))
+            {
+                if (Vector2.Distance(playerTransform.position, obstaclePosition) > destroyDistance)
+                {
+                    GameObject obstacleToDestroy = GameObject.Find(obstaclePosition.ToString());
+                    if (obstaclePosition != null)
+                    {
+                        Destroy(obstacleToDestroy);
+                        generatedObstacles.Remove(obstaclePosition);
+                    }
+
                 }
             }
         }

@@ -8,19 +8,11 @@ using UnityEngine.Animations;
 [RequireComponent(typeof(EnemyAI))]
 public class EnemyControll : MonoBehaviour, IDamageable
 {
-    private StatsManager Status = new StatsManager();
+    private StatsManager Status = new StatsManager();   //генерация всех дефолтных статов, хп-атака-мувспид
     private Transform player;
-    // private HeroController player;
     private EnemyAI enemyAI;
     private Animator animator;
     private TextMeshProUGUI textMeshPro;
-    // private float maxRaycastDistance = 10f; // Максимальная дальность raycast
-    // private float attackRange = 1f; // Диапазон атаки
-
-    // void Attack(int dmg)
-    // {
-    //     Status.Health -= dmg;
-    // }
 
     void Start()
     {
@@ -28,13 +20,11 @@ public class EnemyControll : MonoBehaviour, IDamageable
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponentInChildren<Animator>();
         textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
-        // Player = GetComponent<Transform>();
     }
 
 
     void Update()
     {
-        // Debug.Log(textMeshPro);
         enemyAI.EnemyMovement(player, Status.MoveSpeed);
 
         if (Status.Health <= 0)
@@ -59,9 +49,4 @@ public class EnemyControll : MonoBehaviour, IDamageable
 
         }
     }
-
-    // public void GiveDamage(int dmg)
-    // {
-    //     throw new NotImplementedException();
-    // }
 }

@@ -11,8 +11,6 @@ public class EventManager
     public static event delegateEnemy1 Enemy1Attack;
     public static event delegateEnemy1 Enemy1Expirience;
 
-    // public UnityEvent newEvent;
-
     public static void OnEnemy1Died()
     {
         Enemy1Died?.Invoke();

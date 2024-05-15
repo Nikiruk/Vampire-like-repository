@@ -8,13 +8,11 @@ public class HeroAttack : HeroController
 {
     [SerializeField]private GameObject hitObject;
     private RaycastHit2D[] hits;
-    // private int heroAttack;
 
 
     void Start()
     {
         StartCoroutine(Hit());
-        // heroAttack = HeroController.AttackDamage;
     }
 
     IEnumerator Hit()
@@ -27,15 +25,12 @@ public class HeroAttack : HeroController
 
             hitObject.SetActive(false);
             yield return new WaitForSeconds(1f);
-            // hitObject.SetActive(false); // Выключение объекта
-            // yield return new WaitForSeconds(1); // Ожидание 1 секунды
         }
     }
 
     void Attack()
     {
-        Status.AttackDamage += Random.Range(0, 5);
-        hits = Physics2D.CircleCastAll(transform.position, 3f, transform.up, 0f, 128);
+        hits = Physics2D.CircleCastAll(hitObject.transform.position, 0.5f, transform.up, 0f, 128);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -43,17 +38,9 @@ public class HeroAttack : HeroController
 
             if(idamageable != null)
             {
-                idamageable.TakeDamage(Status.AttackDamage);
-                // idamageable.ChangeColor(Color.black);
+                idamageable.TakeDamage(Status.AttackDamage + Random.Range(0, 5));
             }
         }
 
     }
-
-    // void ChangeColor()
-    // {
-    //     Color newColor = Color.black;
-    // }
-
-
 }

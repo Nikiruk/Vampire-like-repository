@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
-    private float maxRaycastDistance = 10f; // Максимальная дальность raycast
+    private float maxRaycastDistance = 100f; // Максимальная дальность raycast
     private float attackRange = 1f; // Диапазон атаки
 
     public void EnemyMovement(Transform player, int moveSpeed)

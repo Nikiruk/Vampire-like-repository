@@ -5,23 +5,23 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField] protected GameObject[] enemyPrefabs;
-    [SerializeField] protected Transform playerTransform;
     [SerializeField] private Transform parentTransform;
     [SerializeField] protected int enemyMaxCount = 10;
     [SerializeField] protected int enemyCount;
-
-    // private HashSet<GameObject> generatedEnemies = new HashSet<GameObject>();
+    private Transform playerTransform;
 
     void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(Spawn());
+        EventManager.Enemy1Died += OnEnemyDied;
     }
 
 
     public void SpawnEnemies()
     {
-        var positionX = Random.Range(playerTransform.position.x - 10, 10);
-        var positionY = Random.Range(playerTransform.position.y - 10, 10);
+        var positionX = Random.Range(playerTransform.position.x - 10, playerTransform.position.x + 10);
+        var positionY = Random.Range(playerTransform.position.y - 10, playerTransform.position.y + 10);
         if (playerTransform != null)
         {
             if (enemyCount < enemyMaxCount)
@@ -30,9 +30,14 @@ public class EnemySpawn : MonoBehaviour
                 GameObject newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], enemyPosition, Quaternion.identity);
                 newEnemy.transform.SetParent(parentTransform);
                 enemyCount++;
-                Debug.Log("enemy spawned");
+                Debug.Log("enemy spawned" + playerTransform.position);
             }
         }
+    }
+
+    void OnEnemyDied()
+    {
+        enemyCount--;
     }
 
     private IEnumerator Spawn()
@@ -41,8 +46,6 @@ public class EnemySpawn : MonoBehaviour
         {
             SpawnEnemies();
             yield return new WaitForSeconds(1f); // Ожидание 1 секунды
-            // hitObject.SetActive(false); // Выключение объекта
-            // yield return new WaitForSeconds(1); // Ожидание 1 секунды
         }
     } 
 }

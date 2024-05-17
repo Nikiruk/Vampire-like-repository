@@ -5,19 +5,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
 
-[RequireComponent(typeof(EnemyAI))]
-public class EnemyControll : MonoBehaviour, IDamageable
+// [RequireComponent(typeof(EnemyAI))]
+public class EnemyController : MonoBehaviour, IDamageable
 {
-    private StatsManager Status = new StatsManager();   //генерация всех дефолтных статов, хп-атака-мувспид
-    private Transform player;
-    private EnemyAI enemyAI;
+    protected StatsManager Status = new StatsManager();   //генерация всех дефолтных статов, хп-атака-мувспид
+    protected Transform player;
+    // protected LayerMask playerLayerMask = LayerMask.GetMask("Player");
+    // private EnemyAI enemyAI;
     private Animator animator;
     private TextMeshProUGUI textMeshPro;
+    private int Experience = 0;
+    
 
     void Start()
     {
+        // playerLayerMask = LayerMask.GetMask("Player");
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyAI = GetComponent<EnemyAI>();
+        // enemyAI = GetComponent<EnemyAI>();
         animator = GetComponentInChildren<Animator>();
         textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -25,14 +29,19 @@ public class EnemyControll : MonoBehaviour, IDamageable
 
     void Update()
     {
-        enemyAI.EnemyMovement(player, Status.MoveSpeed);
-
+        // enemyAI.EnemyMovement(player, Status.MoveSpeed);
+        EnemyMoving();
         if (Status.Health <= 0)
         {
-            EventManager.OnEnemy1Died();
+            EventManager.OnEnemy1Died(Experience);
             Destroy(gameObject);
         }
 
+    }
+
+    protected virtual void EnemyMoving()
+    {
+        //вызов метода из потомка
     }
 
     public void TakeDamage(int dmg)

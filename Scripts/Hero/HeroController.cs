@@ -8,7 +8,8 @@ public class HeroController : MonoBehaviour
 {
     // private HeroMovement heroMovement;
     protected StatsManager Status = new StatsManager();
-    private Leveling lvl = new Leveling();
+    protected int Level = 1;
+    protected int Experience = 0;
     private int maxHealth;
 
     protected virtual void Move()
@@ -18,7 +19,7 @@ public class HeroController : MonoBehaviour
 
     void Start()
     {
-        EventManager.Enemy1Died += OnEnemyDied;
+        EventManager.Enemy1Died += OnEnemy1Died;
         EventManager.Enemy1Attack += OnEnemy1Attack;
         maxHealth = Status.Health;
     }
@@ -28,9 +29,9 @@ public class HeroController : MonoBehaviour
         Move();
     }
 
-    void OnEnemyDied()
+    void OnEnemy1Died(exp)
     {
-        lvl.Level += 1;
+        Experience += exp;
     }
 
     void OnEnemy1Attack(int dmg)
